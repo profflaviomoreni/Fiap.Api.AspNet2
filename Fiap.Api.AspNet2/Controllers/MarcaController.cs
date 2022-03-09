@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Fiap.Api.AspNet2.Data;
 using Fiap.Api.AspNet2.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -38,6 +39,7 @@ namespace Fiap.Api.AspNet2.Controllers
 
 
         [HttpGet]
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         public async Task<ActionResult<dynamic>> Get(
             [FromQuery] int pagina = 0 ,
             [FromQuery] int tamanho = 30 )
