@@ -66,6 +66,11 @@ namespace Fiap.Api.AspNet2.Data
                 new UsuarioModel(3, "Admin Junior", "123456", "Junior")
             );
 
+            modelBuilder.Entity<ProdutoModel>().HasData(
+               new ProdutoModel(2, "iPhone 11", "SKUIPH11", "Apple iPhone 11", 11000, "", DateTime.Now, 1, 8),
+               new ProdutoModel(3, "iPhone 12", "SKUIPH12", "Apple iPhone 12", 12000, "", DateTime.Now, 1, 9),
+               new ProdutoModel(4, "iPhone 13", "SKUIPH13", "Apple iPhone 13", 12000, "", DateTime.Now, 1, 10)
+            );
 
             base.OnModelCreating(modelBuilder);
         }

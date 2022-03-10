@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Fiap.Api.AspNet2.Data;
 using Fiap.Api.AspNet2.Models;
-using Microsoft.AspNetCore.Authorization;
+using Fiap.Api.AspNet2.Repository.Interface;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,36 +15,32 @@ namespace Fiap.Api.AspNet2.Controllers
     public class MarcaController : ControllerBase
     {
 
-        
-        private readonly DataContext dataContext;
-
-        public MarcaController([FromServices] DataContext ctx)
-        {
-            dataContext = ctx;
-        }
-        
-
         /*
         [HttpGet]
-        public async Task<ActionResult<IList<MarcaModel>>> Get()
+        [Route("GetAll")]
+        public ActionResult<IList<MarcaModel>> GetAll(
+            [FromServices] IMarcaRepository marcaRepository)
         {
+            var marca = marcaRepository.FindAll();
 
-            List<MarcaModel> marcas = await dataContext.Marcas.AsNoTracking().ToListAsync<MarcaModel>();
+            if (marca.Count == 0)
+            {
+                return NoContent();
+            }
 
-            return Ok(marcas);
-
+            return Ok(marca);
         }
         */
 
-
         [HttpGet]
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
-        public async Task<ActionResult<dynamic>> Get(
+        public ActionResult<dynamic> Get(
             [FromQuery] int pagina = 0 ,
-            [FromQuery] int tamanho = 30 )
+            [FromQuery] int tamanho = 30,
+            [FromServices] IMarcaRepository marcaRepository = null)
         {
 
-            var totalGeral = await dataContext.Marcas.CountAsync();
+            var totalGeral = marcaRepository.Count();
             var totalPaginas = (int) Math.Ceiling((double) totalGeral / tamanho);
             var anterior = pagina > 0 ? $"marca?pagina={pagina-1}&tamanho={tamanho}" : "";
             var proximo = pagina < totalPaginas - 1 ? $"marca?pagina={pagina + 1}&tamanho={tamanho}" : "";
@@ -56,12 +51,7 @@ namespace Fiap.Api.AspNet2.Controllers
             }
 
 
-            List<MarcaModel> marcas =
-                await dataContext.Marcas
-                    .Skip(tamanho * pagina)
-                    .Take(tamanho)
-                    .AsNoTracking()
-                    .ToListAsync();
+            IList<MarcaModel> marcas = marcaRepository.FindAll(pagina, tamanho);
 
             return Ok(
                 new
@@ -78,103 +68,87 @@ namespace Fiap.Api.AspNet2.Controllers
 
 
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<MarcaModel>> Get(int id)
+        [HttpGet("{id:int}")]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public ActionResult<MarcaModel> GetById(
+            [FromRoute] int id,
+            [FromServices] IMarcaRepository marcaRepository)
         {
-            var marca = await dataContext.Marcas.AsNoTracking().FirstOrDefaultAsync(m => m.MarcaId == id);
+            var marca = marcaRepository.FindById(id);
 
-            if (marca != null)
-            {
-                return Ok(marca);
-            } else
+            if (marca == null)
             {
                 return NotFound();
             }
 
+            return Ok(marca);
         }
 
         [HttpPost]
-        public async Task<ActionResult<MarcaModel>> Post([FromBody] MarcaModel marcaModel)
-        {
-
-            if ( ! ModelState.IsValid )
-            {
-                return BadRequest(ModelState);
-            }
-
-            try { 
-                dataContext.Marcas.Add(marcaModel);
-                await dataContext.SaveChangesAsync();
-
-                var location = new Uri(Request.GetEncodedUrl() + marcaModel.MarcaId);
-                return Created(location,marcaModel);
-            } catch
-            {
-                return BadRequest(new { message = "Não foi possível inserir a marca" } );
-            }
-        }
-
-
-        [HttpPut("{id:int}")]
-        public async Task<ActionResult<MarcaModel>> Put(
-            [FromRoute] int id,
+        public ActionResult<MarcaModel> Post(
+            [FromServices] IMarcaRepository marcaRepository,
             [FromBody] MarcaModel marcaModel)
         {
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if ( marcaModel.MarcaId != id )
+            try
+            {
+                var marcaId = marcaRepository.Insert(marcaModel);
+                marcaModel.MarcaId = marcaId;
+
+                var location = new Uri(Request.GetEncodedUrl() + marcaId);
+
+                return Created(location, marcaModel);
+            }
+            catch (Exception error)
+            {
+                return BadRequest(new { message = $"Não foi possível inserir a marca. Detalhes: {error.Message}" });
+            }
+        }
+
+
+        [HttpPut("{id:int}")]
+        public ActionResult<MarcaModel> Put(
+            [FromRoute] int id,
+            [FromServices] IMarcaRepository marcaRepository,
+            [FromBody] MarcaModel marcaModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (marcaModel.MarcaId != id)
             {
                 return NotFound();
             }
 
             try
             {
-                dataContext.Marcas.Update(marcaModel);
-                await dataContext.SaveChangesAsync();
+                marcaRepository.Update(marcaModel);
 
-                return NoContent();
+                return Ok(marcaModel);
             }
-            catch
+            catch (Exception error)
             {
-                return BadRequest(new { message = "Não foi possível atualizar a marca" });
+                return BadRequest(new { message = $"Não foi possível alterar a marca. Detalhes: {error.Message}" });
             }
         }
 
 
         [HttpDelete("{id:int}")]
-        public async Task<ActionResult<MarcaModel>> Delete([FromRoute] int id)
+        public ActionResult<MarcaModel> Delete(
+             [FromRoute] int id,
+             [FromServices] IMarcaRepository marcaRepository)
         {
+            marcaRepository.Delete(id);
 
-            if ( 0 == id)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                var marca = await dataContext.Marcas.FindAsync(id);
-
-                if ( marca != null)
-                {
-                    dataContext.Marcas.Remove(marca);
-                    await dataContext.SaveChangesAsync();
-
-                    return NoContent();
-                } else
-                {
-                    return NotFound();
-                }
-
-            }
-            catch
-            {
-                return BadRequest(new { message = "Não foi possível remover a marca" });
-            }
+            return Ok();
         }
+
 
 
     }

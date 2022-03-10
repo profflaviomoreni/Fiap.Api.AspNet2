@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Fiap.Api.AspNet2.Data;
+using Fiap.Api.AspNet2.Repository;
+using Fiap.Api.AspNet2.Repository.Interface;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -51,7 +53,12 @@ namespace Fiap.Api.AspNet2
             #endregion
 
 
-            #region Acesso ao banco
+            #region Injeção de dependencias
+            services.AddScoped<IMarcaRepository, MarcaRepository>();
+            services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<IProdutoRepository, ProdutoRepository>();
+
             var connectionString = Configuration.GetConnectionString("databaseUrl");
             services.AddDbContext<DataContext>(
                 option => option.UseSqlServer(connectionString).EnableSensitiveDataLogging()
