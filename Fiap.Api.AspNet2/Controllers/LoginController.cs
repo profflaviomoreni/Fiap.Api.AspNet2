@@ -8,7 +8,11 @@ using System.Linq;
 
 namespace Fiap.Api.AspNet2.Controllers
 {
-    [Route("api/[controller]")]
+
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
+    [ApiVersion("3.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class LoginController : ControllerBase
     {
         [HttpPost]

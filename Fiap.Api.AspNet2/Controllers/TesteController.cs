@@ -9,13 +9,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Fiap.Api.AspNet2.Controllers
 {
-
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
+    [ApiVersion("3.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [Authorize]
     public class TesteController : Controller
     {
 
-
+        [HttpGet]
         [AllowAnonymous]
         [Route("anonimo")]
         public string Anonimo()
@@ -32,7 +34,7 @@ namespace Fiap.Api.AspNet2.Controllers
             return "Autenticado";
         }
 
-
+        [HttpGet]
         [Authorize(Roles = "Junior, Pleno, Senior")]
         [Route("junior")]
         public string Junior()
@@ -40,7 +42,7 @@ namespace Fiap.Api.AspNet2.Controllers
             return "Junior";
         }
 
-
+        [HttpGet]
         [Authorize(Roles = "Pleno, Senior")]
         [Route("pleno")]
         public string Pleno()
@@ -48,6 +50,7 @@ namespace Fiap.Api.AspNet2.Controllers
             return "Pleno";
         }
 
+        [HttpGet]
         [Authorize(Roles = "Senior")]
         [Route("senior")]
         public string Senior()
