@@ -17,6 +17,7 @@ namespace Fiap.Api.AspNet2.Clients
         public CursoClient()
         {
             httpClient = new HttpClient();
+            httpClient.Timeout = TimeSpan.FromSeconds(6);
         }
 
 
@@ -76,9 +77,7 @@ namespace Fiap.Api.AspNet2.Clients
 
         }
 
-        public async 
-        Task
-Put(CursoModel cursoModel)
+        public async Task Put(CursoModel cursoModel)
         {
 
             var cursoJson = JsonConvert.SerializeObject(cursoModel);
@@ -94,10 +93,7 @@ Put(CursoModel cursoModel)
         }
 
 
-        public async 
-
-        Task
-Delete(int id)
+        public async Task Delete(int id)
         {
 
             var resposta = await httpClient.DeleteAsync($"{endpoint}/{id}");

@@ -11,13 +11,16 @@ using Microsoft.EntityFrameworkCore;
 namespace Fiap.Api.AspNet2.Controllers
 {
 
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
+    [ApiVersion("3.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class MarcaController : ControllerBase
     {
 
-        /*
+        
         [HttpGet]
-        [Route("GetAll")]
+        [ApiVersion("1.0", Deprecated = true)]
         public ActionResult<IList<MarcaModel>> GetAll(
             [FromServices] IMarcaRepository marcaRepository)
         {
@@ -30,13 +33,15 @@ namespace Fiap.Api.AspNet2.Controllers
 
             return Ok(marca);
         }
-        */
+        
 
         [HttpGet]
+        [ApiVersion("2.0")]
+        [ApiVersion("3.0")]
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         public ActionResult<dynamic> Get(
-            [FromQuery] int pagina = 0 ,
-            [FromQuery] int tamanho = 30,
+            [FromQuery] int pagina = 0,
+            [FromQuery] int tamanho = 3,
             [FromServices] IMarcaRepository marcaRepository = null)
         {
 
@@ -69,6 +74,7 @@ namespace Fiap.Api.AspNet2.Controllers
 
 
         [HttpGet("{id:int}")]
+        [ApiVersion("3.0")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public ActionResult<MarcaModel> GetById(
             [FromRoute] int id,

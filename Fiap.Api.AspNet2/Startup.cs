@@ -12,13 +12,18 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace Fiap.Api.AspNet2
 {
@@ -38,6 +43,32 @@ namespace Fiap.Api.AspNet2
 
             services.AddControllers();
 
+            #region versionamento
+            services.AddApiVersioning(options => {
+                options.UseApiBehavior = false;
+                options.ReportApiVersions = true;
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.DefaultApiVersion = new ApiVersion(3, 0);
+                options.ApiVersionReader =
+                    ApiVersionReader.Combine(
+                        new HeaderApiVersionReader("x-api-version"),
+                        new QueryStringApiVersionReader(),
+                        new UrlSegmentApiVersionReader());
+            });
+
+            services.AddVersionedApiExplorer(setup =>
+            {
+                setup.GroupNameFormat = "'v'VVV";
+                setup.SubstituteApiVersionInUrl = true;
+            });
+            #endregion
+
+
+            #region Swagger
+            services.AddSwaggerGen();
+
+            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+            #endregion
 
             #region Cors
             /*
@@ -104,12 +135,34 @@ namespace Fiap.Api.AspNet2
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            #region Versionamento
+            app.UseApiVersioning();
+            #endregion
+
+
+            #region Swagger
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                foreach (var description in provider.ApiVersionDescriptions)
+                {
+                    c.SwaggerEndpoint(
+                    $"/swagger/{description.GroupName}/swagger.json",
+                    description.GroupName.ToUpperInvariant());
+                }
+
+                c.DocExpansion(DocExpansion.List);
+                c.RoutePrefix = string.Empty;
+            });
+            #endregion
 
             app.UseHttpsRedirection();
 

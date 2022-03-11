@@ -1,4 +1,6 @@
 ﻿using System;
+using Newtonsoft.Json;
+
 namespace Fiap.Api.AspNet2.Models
 {
     public class CursoModel
@@ -20,7 +22,9 @@ namespace Fiap.Api.AspNet2.Models
 
         public bool Concluido { get; set; }
 
-        public double PercentualConclusao { get; set; }
+        //public double PercentualConclusao { get; set; }
+        [JsonProperty("PercentualConclusao")]
+        public double Percentual { get; set; }
 
     }
 }

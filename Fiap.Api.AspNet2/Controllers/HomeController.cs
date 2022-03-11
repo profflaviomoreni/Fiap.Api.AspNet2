@@ -10,7 +10,7 @@ namespace Fiap.Api.AspNet2.Controllers
         [HttpGet]
         public string Get()
         {
-            return "Get - Olá Fiap";
+            return "Get - Olá Fiap - Flavio Azure";
         }
 
         [HttpPost]
