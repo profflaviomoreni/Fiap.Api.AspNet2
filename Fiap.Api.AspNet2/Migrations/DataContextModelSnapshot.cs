@@ -77,6 +77,41 @@ namespace Fiap.Api.AspNet2.Migrations
                     b.HasData(
                         new
                         {
+                            MarcaId = 1,
+                            NomeMarca = "Marca 1"
+                        },
+                        new
+                        {
+                            MarcaId = 2,
+                            NomeMarca = "Marca 2"
+                        },
+                        new
+                        {
+                            MarcaId = 3,
+                            NomeMarca = "Marca 3"
+                        },
+                        new
+                        {
+                            MarcaId = 4,
+                            NomeMarca = "Marca 4"
+                        },
+                        new
+                        {
+                            MarcaId = 5,
+                            NomeMarca = "Marca 5"
+                        },
+                        new
+                        {
+                            MarcaId = 6,
+                            NomeMarca = "Marca 6"
+                        },
+                        new
+                        {
+                            MarcaId = 7,
+                            NomeMarca = "Marca 7"
+                        },
+                        new
+                        {
                             MarcaId = 8,
                             NomeMarca = "Marca 8"
                         },
@@ -206,24 +241,12 @@ namespace Fiap.Api.AspNet2.Migrations
                     b.HasData(
                         new
                         {
-                            ProdutoId = 1,
-                            Caracteristicas = "",
-                            CategoriaId = 1,
-                            DataLancamento = new DateTime(2022, 3, 9, 21, 18, 49, 170, DateTimeKind.Local).AddTicks(330),
-                            Descricao = "Apple iPhone 12",
-                            MarcaId = 1,
-                            Nome = "iPhone 12",
-                            Preco = 5000m,
-                            Sku = "SKUIPH12"
-                        },
-                        new
-                        {
                             ProdutoId = 2,
                             Caracteristicas = "",
                             CategoriaId = 1,
-                            DataLancamento = new DateTime(2022, 3, 9, 21, 18, 49, 196, DateTimeKind.Local).AddTicks(3120),
+                            DataLancamento = new DateTime(2022, 3, 10, 23, 27, 38, 428, DateTimeKind.Local).AddTicks(910),
                             Descricao = "Apple iPhone 11",
-                            MarcaId = 8,
+                            MarcaId = 1,
                             Nome = "iPhone 11",
                             Preco = 11000m,
                             Sku = "SKUIPH11"
@@ -233,9 +256,9 @@ namespace Fiap.Api.AspNet2.Migrations
                             ProdutoId = 3,
                             Caracteristicas = "",
                             CategoriaId = 1,
-                            DataLancamento = new DateTime(2022, 3, 9, 21, 18, 49, 196, DateTimeKind.Local).AddTicks(3500),
+                            DataLancamento = new DateTime(2022, 3, 10, 23, 27, 38, 453, DateTimeKind.Local).AddTicks(8950),
                             Descricao = "Apple iPhone 12",
-                            MarcaId = 9,
+                            MarcaId = 2,
                             Nome = "iPhone 12",
                             Preco = 12000m,
                             Sku = "SKUIPH12"
@@ -245,9 +268,9 @@ namespace Fiap.Api.AspNet2.Migrations
                             ProdutoId = 4,
                             Caracteristicas = "",
                             CategoriaId = 1,
-                            DataLancamento = new DateTime(2022, 3, 9, 21, 18, 49, 196, DateTimeKind.Local).AddTicks(3510),
+                            DataLancamento = new DateTime(2022, 3, 10, 23, 27, 38, 453, DateTimeKind.Local).AddTicks(9400),
                             Descricao = "Apple iPhone 13",
-                            MarcaId = 10,
+                            MarcaId = 3,
                             Nome = "iPhone 13",
                             Preco = 12000m,
                             Sku = "SKUIPH13"

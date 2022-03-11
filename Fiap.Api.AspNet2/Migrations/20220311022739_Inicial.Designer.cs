@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fiap.Api.AspNet2.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220305135315_initial")]
-    partial class initial
+    [Migration("20220311022739_Inicial")]
+    partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -69,8 +69,8 @@ namespace Fiap.Api.AspNet2.Migrations
 
                     b.Property<string>("NomeMarca")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.HasKey("MarcaId");
 
@@ -80,22 +80,117 @@ namespace Fiap.Api.AspNet2.Migrations
                         new
                         {
                             MarcaId = 1,
-                            NomeMarca = "Apple"
+                            NomeMarca = "Marca 1"
                         },
                         new
                         {
                             MarcaId = 2,
-                            NomeMarca = "Samsung"
+                            NomeMarca = "Marca 2"
                         },
                         new
                         {
                             MarcaId = 3,
-                            NomeMarca = "Google"
+                            NomeMarca = "Marca 3"
                         },
                         new
                         {
                             MarcaId = 4,
-                            NomeMarca = "Xiaomi"
+                            NomeMarca = "Marca 4"
+                        },
+                        new
+                        {
+                            MarcaId = 5,
+                            NomeMarca = "Marca 5"
+                        },
+                        new
+                        {
+                            MarcaId = 6,
+                            NomeMarca = "Marca 6"
+                        },
+                        new
+                        {
+                            MarcaId = 7,
+                            NomeMarca = "Marca 7"
+                        },
+                        new
+                        {
+                            MarcaId = 8,
+                            NomeMarca = "Marca 8"
+                        },
+                        new
+                        {
+                            MarcaId = 9,
+                            NomeMarca = "Marca 9"
+                        },
+                        new
+                        {
+                            MarcaId = 10,
+                            NomeMarca = "Marca 10"
+                        },
+                        new
+                        {
+                            MarcaId = 11,
+                            NomeMarca = "Marca 11"
+                        },
+                        new
+                        {
+                            MarcaId = 12,
+                            NomeMarca = "Marca 12"
+                        },
+                        new
+                        {
+                            MarcaId = 13,
+                            NomeMarca = "Marca 13"
+                        },
+                        new
+                        {
+                            MarcaId = 14,
+                            NomeMarca = "Marca 14"
+                        },
+                        new
+                        {
+                            MarcaId = 15,
+                            NomeMarca = "Marca 15"
+                        },
+                        new
+                        {
+                            MarcaId = 16,
+                            NomeMarca = "Marca 16"
+                        },
+                        new
+                        {
+                            MarcaId = 17,
+                            NomeMarca = "Marca 17"
+                        },
+                        new
+                        {
+                            MarcaId = 18,
+                            NomeMarca = "Marca 18"
+                        },
+                        new
+                        {
+                            MarcaId = 19,
+                            NomeMarca = "Marca 19"
+                        },
+                        new
+                        {
+                            MarcaId = 20,
+                            NomeMarca = "Marca 20"
+                        },
+                        new
+                        {
+                            MarcaId = 21,
+                            NomeMarca = "Marca 21"
+                        },
+                        new
+                        {
+                            MarcaId = 22,
+                            NomeMarca = "Marca 22"
+                        },
+                        new
+                        {
+                            MarcaId = 23,
+                            NomeMarca = "Marca 23"
                         });
                 });
 
@@ -148,15 +243,39 @@ namespace Fiap.Api.AspNet2.Migrations
                     b.HasData(
                         new
                         {
-                            ProdutoId = 1,
+                            ProdutoId = 2,
                             Caracteristicas = "",
                             CategoriaId = 1,
-                            DataLancamento = new DateTime(2022, 3, 5, 10, 53, 11, 118, DateTimeKind.Local).AddTicks(9290),
-                            Descricao = "Apple iPhone 12",
+                            DataLancamento = new DateTime(2022, 3, 10, 23, 27, 38, 428, DateTimeKind.Local).AddTicks(910),
+                            Descricao = "Apple iPhone 11",
                             MarcaId = 1,
+                            Nome = "iPhone 11",
+                            Preco = 11000m,
+                            Sku = "SKUIPH11"
+                        },
+                        new
+                        {
+                            ProdutoId = 3,
+                            Caracteristicas = "",
+                            CategoriaId = 1,
+                            DataLancamento = new DateTime(2022, 3, 10, 23, 27, 38, 453, DateTimeKind.Local).AddTicks(8950),
+                            Descricao = "Apple iPhone 12",
+                            MarcaId = 2,
                             Nome = "iPhone 12",
-                            Preco = 5000m,
+                            Preco = 12000m,
                             Sku = "SKUIPH12"
+                        },
+                        new
+                        {
+                            ProdutoId = 4,
+                            Caracteristicas = "",
+                            CategoriaId = 1,
+                            DataLancamento = new DateTime(2022, 3, 10, 23, 27, 38, 453, DateTimeKind.Local).AddTicks(9400),
+                            Descricao = "Apple iPhone 13",
+                            MarcaId = 3,
+                            Nome = "iPhone 13",
+                            Preco = 12000m,
+                            Sku = "SKUIPH13"
                         });
                 });
 

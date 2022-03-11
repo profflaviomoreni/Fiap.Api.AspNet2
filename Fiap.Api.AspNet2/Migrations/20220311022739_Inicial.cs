@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Fiap.Api.AspNet2.Migrations
 {
-    public partial class initial : Migration
+    public partial class Inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,7 +26,7 @@ namespace Fiap.Api.AspNet2.Migrations
                 {
                     MarcaId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NomeMarca = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    NomeMarca = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -96,10 +96,29 @@ namespace Fiap.Api.AspNet2.Migrations
                 columns: new[] { "MarcaId", "NomeMarca" },
                 values: new object[,]
                 {
-                    { 1, "Apple" },
-                    { 2, "Samsung" },
-                    { 3, "Google" },
-                    { 4, "Xiaomi" }
+                    { 23, "Marca 23" },
+                    { 22, "Marca 22" },
+                    { 21, "Marca 21" },
+                    { 20, "Marca 20" },
+                    { 19, "Marca 19" },
+                    { 18, "Marca 18" },
+                    { 17, "Marca 17" },
+                    { 16, "Marca 16" },
+                    { 15, "Marca 15" },
+                    { 14, "Marca 14" },
+                    { 13, "Marca 13" },
+                    { 11, "Marca 11" },
+                    { 10, "Marca 10" },
+                    { 9, "Marca 9" },
+                    { 8, "Marca 8" },
+                    { 7, "Marca 7" },
+                    { 6, "Marca 6" },
+                    { 5, "Marca 5" },
+                    { 4, "Marca 4" },
+                    { 3, "Marca 3" },
+                    { 2, "Marca 2" },
+                    { 1, "Marca 1" },
+                    { 12, "Marca 12" }
                 });
 
             migrationBuilder.InsertData(
@@ -107,15 +126,25 @@ namespace Fiap.Api.AspNet2.Migrations
                 columns: new[] { "UsuarioId", "NomeUsuario", "Regra", "Senha" },
                 values: new object[,]
                 {
-                    { 1, "Admin Senior", "Senior", "123456" },
                     { 2, "Admin Pleno", "Pleno", "123456" },
+                    { 1, "Admin Senior", "Senior", "123456" },
                     { 3, "Admin Junior", "Junior", "123456" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Produtos",
                 columns: new[] { "ProdutoId", "Caracteristicas", "CategoriaId", "DataLancamento", "Descricao", "MarcaId", "Nome", "Preco", "Sku" },
-                values: new object[] { 1, "", 1, new DateTime(2022, 3, 5, 10, 53, 11, 118, DateTimeKind.Local).AddTicks(9290), "Apple iPhone 12", 1, "iPhone 12", 5000m, "SKUIPH12" });
+                values: new object[] { 2, "", 1, new DateTime(2022, 3, 10, 23, 27, 38, 428, DateTimeKind.Local).AddTicks(910), "Apple iPhone 11", 1, "iPhone 11", 11000m, "SKUIPH11" });
+
+            migrationBuilder.InsertData(
+                table: "Produtos",
+                columns: new[] { "ProdutoId", "Caracteristicas", "CategoriaId", "DataLancamento", "Descricao", "MarcaId", "Nome", "Preco", "Sku" },
+                values: new object[] { 3, "", 1, new DateTime(2022, 3, 10, 23, 27, 38, 453, DateTimeKind.Local).AddTicks(8950), "Apple iPhone 12", 2, "iPhone 12", 12000m, "SKUIPH12" });
+
+            migrationBuilder.InsertData(
+                table: "Produtos",
+                columns: new[] { "ProdutoId", "Caracteristicas", "CategoriaId", "DataLancamento", "Descricao", "MarcaId", "Nome", "Preco", "Sku" },
+                values: new object[] { 4, "", 1, new DateTime(2022, 3, 10, 23, 27, 38, 453, DateTimeKind.Local).AddTicks(9400), "Apple iPhone 13", 3, "iPhone 13", 12000m, "SKUIPH13" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Produtos_CategoriaId",

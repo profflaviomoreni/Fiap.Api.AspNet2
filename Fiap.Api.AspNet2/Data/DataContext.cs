@@ -31,6 +31,13 @@ namespace Fiap.Api.AspNet2.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<MarcaModel>().HasData(
+                new MarcaModel(1, "Marca 1"),
+                new MarcaModel(2, "Marca 2"),
+                new MarcaModel(3, "Marca 3"),
+                new MarcaModel(4, "Marca 4"),
+                new MarcaModel(5, "Marca 5"),
+                new MarcaModel(6, "Marca 6"),
+                new MarcaModel(7, "Marca 7"),
                 new MarcaModel(8, "Marca 8"),
                 new MarcaModel(9, "Marca 9"),
                 new MarcaModel(10, "Marca 10"),
@@ -56,9 +63,6 @@ namespace Fiap.Api.AspNet2.Data
                 new CategoriaModel(4, "Tablet")
             );
 
-            modelBuilder.Entity<ProdutoModel>().HasData(
-                new ProdutoModel(1, "iPhone 12", "SKUIPH12", "Apple iPhone 12", 5000, "", DateTime.Now, 1, 1)
-            );
 
             modelBuilder.Entity<UsuarioModel>().HasData(
                 new UsuarioModel(1, "Admin Senior", "123456", "Senior"),
@@ -67,9 +71,9 @@ namespace Fiap.Api.AspNet2.Data
             );
 
             modelBuilder.Entity<ProdutoModel>().HasData(
-               new ProdutoModel(2, "iPhone 11", "SKUIPH11", "Apple iPhone 11", 11000, "", DateTime.Now, 1, 8),
-               new ProdutoModel(3, "iPhone 12", "SKUIPH12", "Apple iPhone 12", 12000, "", DateTime.Now, 1, 9),
-               new ProdutoModel(4, "iPhone 13", "SKUIPH13", "Apple iPhone 13", 12000, "", DateTime.Now, 1, 10)
+               new ProdutoModel(2, "iPhone 11", "SKUIPH11", "Apple iPhone 11", 11000, "", DateTime.Now, 1, 1),
+               new ProdutoModel(3, "iPhone 12", "SKUIPH12", "Apple iPhone 12", 12000, "", DateTime.Now, 1, 2),
+               new ProdutoModel(4, "iPhone 13", "SKUIPH13", "Apple iPhone 13", 12000, "", DateTime.Now, 1, 3)
             );
 
             base.OnModelCreating(modelBuilder);
